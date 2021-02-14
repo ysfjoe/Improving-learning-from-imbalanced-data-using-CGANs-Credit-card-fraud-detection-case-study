@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>My First Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+ <style type="text/css">
+  #res {
+   width: 400px; height: 150px; background-color: #EEE;float: right; box-shadow: 10px 10px 10px grey;
+   display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+  }
+  .marge{
+    margin-top: 50px;
+  }
+  .hover:hover{
+text-decoration: underline;
+color: red;
+  }
+ </style>           
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Fraud Detection</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link " aria-current="page" href="{{url_for('index')}}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{{url_for('stats')}}">Stats</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link active" href="#">Prediciton</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<div class="container" style="width: auto;">
+
+<!-- nav tabs for list of values-->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <a class="nav-link " id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Enter values</a>
+  </li>
+  <li class="nav-item show active" role="presentation">
+    <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Upload file</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
+    <!-- div for Values entries -->
+          <div class="row">
+
+                <div class="col-md-6">    
+                  <form class="steps" accept-charset="UTF-8" enctype="multipart/form-data" novalidate="" action="{{ url_for('result')}}" method="post">
+
+                    <!-- choice of technique used-->
+
+           <h5 class="form-label  hover"  >Sampling technique :</h5>
+                  <div class="input-field col s12">
+                  <p>
+                    <label>
+                      <input class="with-gap hover" name="sampling" type="radio" checked/>
+                      <span class="hover">OverSamling : GANs</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input class="with-gap " name="sampling" type="radio" />
+                      <span class="hover">OverSamling : SMOTE</span>
+                    </label>
+                  </p>
+                      <p>
+                    <label>
+                      <input class="with-gap hover" name="sampling" type="radio" />
+                      <span class="hover">UnderSamling : RandomUnderSamling</span>
+                    </label>
+                  </p>
+                  </div>
+
+                  <h5 class="form-label marge hover">Algorithm :</h5>
+                  <div class="input-field col s12">
+                      <p>
+                    <label>
+                      <input class="with-gap " name="algo" type="radio" checked/>
+                      <span class="hover">RandomForestClassifier</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input class="with-gap " name="algo" type="radio"/>
+                      <span class="hover">LogisticRegression</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input class="with-gap " name="algo" type="radio"  />
+                      <span class="hover">XGBoost</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input class="with-gap " name="algo" type="radio" />
+                      <span class="hover">ANN</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input class="with-gap " name="algo" type="radio" />
+                      <span class="hover">1DCNN and LSTM</span>
+                    </label>
+                  </p>
+
+
+                  <div class="input-field col s12">
+                    <label class="form-label" for="form1Example1">Enter value for V3</label>
+                    <input type="number" step="0.00001" name="v3" id="form1Example1" class="validate"  required />
+
+                  </div>
+                  <div class="input-field col s12">
+                    <input  type="number" step="0.00001" name="v4"  id="form1Example2" class="form-control"  required />
+                    <label class="form-label" for="form1Example2">Enter value for V4</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="number" step="0.00001" name="v7"  id="form1Example3" class="form-control"  required />
+                    <label class="form-label" for="form1Example3">Enter value for V7</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="number" step="0.00001" name="v10"  id="form1Example4" class="form-control"  required />
+                    <label class="form-label" for="form1Example4">Enter value for V10</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="number" step="0.00001" name="v11" id="form1Example5" class="form-control"  required />
+                    <label class="form-label" for="form1Example5">Enter value for V11</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="number" step="0.00001" name="v12"  id="form1Example6" class="form-control"  required />
+                    <label class="form-label" for="form1Example6">Enter value for V12</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="number" step="0.00001" name="v14" id="form1Example7" class="form-control"  required />
+                    <label class="form-label" for="form1Example7">Enter value for V14</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input type="number" step="0.00001" name="v17"  id="form1Example8" class="form-control"  required />
+                    <label class="form-label" for="form1Example8">Enter value for V17</label>
+                  </div>
+
+                 
+                  </div>
+                  <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                  </form>
+              </div>
+
+          <!--predict button -->
+              <div class="col-md-6 d-flex justify-content-center" style="margin-top: 230px">
+                <div id="res">
+                  {% if proba is not none %}
+                    {% if pred is not none %}
+                      The result of this transaction is <br/> 
+                      {% if pred == "Fraud" %} <span style="color: red"> <b>{{pred}}</b> </span>
+                      with a probability of <br/>
+                      <span style="color: red"> <b>{{proba}}%</b> </span>
+                      {%endif %}
+                      {% if pred == "NO Fraud" %} <span style="color: green"> <b>{{pred}}</b> </span>
+                      with a probability of <br/>
+                      <span style="color: green"> <b>{{proba}}%</b> </span>
+                      {%endif %}
+                    {%endif %}
+                  {%endif %}
+                </div>
+              </div>
+             </div>
+
+
+            </div>
+  <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+      <div class="row"> 
+        <div class="col-sm-5">
+    <!-- div for upload files -->
+              <form class="steps" accept-charset="UTF-8" enctype="multipart/form-data" novalidate="" action="{{ url_for('predict_file')}}" method="post">
+
+
+<!-- file button -->
+                  <div class="file-field input-field">
+                    <div class="btn">
+                      <span>File</span>
+                      <input type="file"  name="fichier" multiple>
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                    </div>
+                  </div>
+
+
+ <h5 class="form-label  hover"  >Sampling technique :</h5>
+                  <div class="input-field col s12">
+                  <p>
+                    <label>
+                      <input class="with-gap hover" name="sampling" type="radio" checked/>
+                      <span class="hover">OverSamling : GANs</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input class="with-gap " name="sampling" type="radio" />
+                      <span class="hover">OverSamling : SMOTE</span>
+                    </label>
+                  </p>
+                      <p>
+                    <label>
+                      <input class="with-gap hover" name="sampling" type="radio" />
+                      <span class="hover">UnderSamling : RandomUnderSamling</span>
+                    </label>
+                  </p>
+                  </div>
+
+                  <h5 class="form-label marge hover">Algorithm :</h5>
+                  <div class="input-field col s12">
+                      <p>
+                    <label>
+                      <input class="with-gap " name="algo" type="radio" checked/>
+                      <span class="hover">RandomForestClassifier</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input class="with-gap " name="algo" type="radio"/>
+                      <span class="hover">LogisticRegression</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input class="with-gap " name="algo" type="radio"  />
+                      <span class="hover">XGBoost</span>
+                    </label>
+                  </p>
+                      <p>
+                    <label>
+                      <input class="with-gap " name="algo" type="radio" />
+                      <span class="hover">ANN</span>
+                    </label>
+                  </p>
+                  <p>
+                    <label>
+                      <input class="with-gap " name="algo" type="radio" />
+                      <span class="hover">1DCNN and LSTM</span>
+                    </label>
+                  </p>
+                  </div>
+
+  <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+
+                </form>
+
+            </div>
+
+<div class="col-sm-7 " style="margin-top: 150px">
+
+ <table class="highlight">
+        <thead>
+          <tr>
+              <th>Transaction</th>
+              <th>State of the transaction</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% if predict is not none %}
+            {% for value in predict %}
+              
+                <tr>
+                  <td>
+                    {{loop.index}}
+                  </td>
+                  {% if value == 0 %}
+                  <td style="color: green">
+                    NO FRAUD
+                  </td>
+                  {% else%}
+                  <td style="color: red">
+                    FRAUD
+                  </td>
+                  {%endif%}
+                </tr>
+
+            {%endfor%}
+          {% endif %}
+        </tbody>
+  </table>
+  </div>
+         </div>   
+
+  </div>
+</div>
+
+
+
+
+
+
+
+  
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+   <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

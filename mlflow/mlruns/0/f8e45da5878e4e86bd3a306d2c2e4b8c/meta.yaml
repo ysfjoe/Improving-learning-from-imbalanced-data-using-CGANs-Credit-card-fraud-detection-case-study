@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/um6p/Documents/web%20minig/Projet/App-Flask-Plotly/mlflow/mlruns/0/f8e45da5878e4e86bd3a306d2c2e4b8c/artifacts
+end_time: 1610153268979
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: f8e45da5878e4e86bd3a306d2c2e4b8c
+run_uuid: f8e45da5878e4e86bd3a306d2c2e4b8c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1610153232563
+status: 3
+tags: []
+user_id: um6p
