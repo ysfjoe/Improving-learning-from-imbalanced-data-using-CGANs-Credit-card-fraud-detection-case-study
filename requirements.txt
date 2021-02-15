@@ -1,6 +1,5 @@
 flask
 plotly
-TSNE
 pandas
 numpy
 gunicorn
