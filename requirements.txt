@@ -3,7 +3,6 @@ plotly
 TSNE
 pandas
 numpy
-sys
 pickle
 plotly.graph_objs
 plotly.express
