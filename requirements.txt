@@ -3,7 +3,7 @@ plotly
 TSNE
 pandas
 numpy
-pickle
+gunicorn
 plotly.graph_objs
 plotly.express
 classification_report
